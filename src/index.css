@@ -1,0 +1,229 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #d9e4f2;
+  background: #080b12;
+  font-synthesis: none;
+  --panel: rgba(15, 21, 33, .88);
+  --panel-2: #111827;
+  --line: #253047;
+  --muted: #8997aa;
+  --cyan: #53d8fb;
+  --violet: #a78bfa;
+  --green: #48d597;
+  --yellow: #f4bf53;
+  --red: #ff7185;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: radial-gradient(circle at 80% 0, #15223d 0, transparent 31rem), #080b12; }
+button, input, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { color: inherit; }
+a { color: inherit; text-decoration: none; }
+.app-shell { min-height: 100vh; display: grid; grid-template-columns: 280px minmax(0, 1fr); }
+.sidebar { position: sticky; top: 0; height: 100vh; padding: 28px 22px; border-right: 1px solid var(--line); background: rgba(8, 12, 20, .88); backdrop-filter: blur(18px); z-index: 4; }
+.brand { display: flex; align-items: center; gap: 12px; margin-bottom: 34px; }
+.brand-mark { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid #3e567a; border-radius: 12px; background: linear-gradient(145deg, #182943, #101725); color: var(--cyan); font: 800 14px/1 monospace; box-shadow: 0 0 24px #53d8fb18; }
+.brand strong { display: block; color: #f6f9fd; letter-spacing: -.02em; }
+.brand small, .muted { color: var(--muted); }
+.progress-ring { --progress: 0; position: relative; width: 154px; aspect-ratio: 1; margin: 15px auto 25px; display: grid; place-items: center; border-radius: 50%; background: conic-gradient(var(--cyan) calc(var(--progress) * 1%), #1b2536 0); }
+.progress-ring::after { content: ""; position: absolute; inset: 9px; border-radius: inherit; background: #0c111c; }
+.progress-value { position: relative; z-index: 1; text-align: center; }
+.progress-value b { display: block; font-size: 32px; color: white; }
+.progress-value span { font-size: 12px; color: var(--muted); }
+.side-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
+.side-stats { display: grid; gap: 13px; padding: 18px 0; border-block: 1px solid var(--line); }
+.side-stats div { display: grid; grid-template-columns: 10px 1fr auto; align-items: center; gap: 9px; font-size: 13px; }
+.side-stats b { color: #b8c4d4; font-variant-numeric: tabular-nums; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+.dot.简单 { background: var(--green); }.dot.中等 { background: var(--yellow); }.dot.困难 { background: var(--red); }
+nav { margin-top: 24px; display: grid; gap: 5px; }
+.nav-item { width: 100%; border: 0; background: transparent; padding: 11px 12px; display: flex; gap: 12px; border-radius: 9px; color: var(--muted); text-align: left; cursor: pointer; }
+.nav-item.active { color: #e8f5ff; background: #172236; }
+.side-tip { position: absolute; bottom: 24px; inset-inline: 22px; padding: 16px; border: 1px solid #2d3a51; border-radius: 12px; background: linear-gradient(145deg, #121b2a, #0d131f); }
+.side-tip b { color: var(--violet); font-size: 13px; }.side-tip p { margin: 7px 0 0; font-size: 12px; line-height: 1.6; color: var(--muted); }
+main { min-width: 0; }
+.topbar { min-height: 170px; padding: 36px clamp(24px, 4vw, 62px) 28px; display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--line); }
+.eyebrow { color: var(--cyan); font: 700 11px/1 monospace; letter-spacing: .16em; }
+h1 { margin: 10px 0 0; color: #f5f8fc; font-size: clamp(27px, 3vw, 42px); letter-spacing: -.045em; }
+.header-progress { display: grid; grid-template-columns: auto auto auto auto auto; align-items: baseline; gap: 7px; color: var(--muted); font-size: 12px; }
+.header-progress b { color: white; font: 700 24px/1 monospace; }.header-progress i { margin: 0 4px; color: #40506a; }
+.workspace { display: grid; grid-template-columns: minmax(320px, 39%) minmax(0, 1fr); min-height: calc(100vh - 170px); }
+.catalog { border-right: 1px solid var(--line); min-width: 0; }
+.catalog-head { padding: 24px 24px 15px; display: flex; align-items: center; justify-content: space-between; }
+.catalog-head h2 { display: inline; margin: 0 9px 0 0; color: #f4f7fb; font-size: 17px; }.catalog-head span { color: var(--muted); font-size: 12px; }
+.filter-toggle { display: none; }
+.search { height: 42px; margin: 0 20px 10px; display: flex; align-items: center; gap: 9px; padding: 0 12px; border: 1px solid var(--line); border-radius: 9px; background: #0c121e; color: var(--muted); }
+.search:focus-within { border-color: #436784; box-shadow: 0 0 0 3px #53d8fb0d; }
+.search input { width: 100%; border: 0; outline: 0; color: #e5edf7; background: transparent; font-size: 13px; }
+.filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 20px 17px; }
+.filters select { padding: 9px 10px; border: 1px solid var(--line); border-radius: 8px; background: #111827; color: #b9c5d5; font-size: 12px; outline: 0; }
+.problem-list { max-height: calc(100vh - 335px); overflow: auto; scrollbar-width: thin; scrollbar-color: #34445d transparent; }
+.problem-row { width: 100%; min-height: 70px; padding: 12px 18px 12px 20px; display: grid; grid-template-columns: 21px minmax(0, 1fr) auto; align-items: center; gap: 10px; border: 0; border-left: 2px solid transparent; border-top: 1px solid #1c2637; background: transparent; text-align: left; cursor: pointer; }
+.problem-row:hover { background: #111827; }.problem-row.selected { border-left-color: var(--cyan); background: linear-gradient(90deg, #15283a, #101724); }
+.check { width: 17px; height: 17px; display: grid; place-items: center; border: 1px solid #3b4960; border-radius: 5px; color: #07100c; font-size: 11px; }.check.done { background: var(--green); border-color: var(--green); }
+.problem-copy { min-width: 0; }.problem-copy b { display: block; overflow: hidden; color: #dce5f0; font-size: 13px; white-space: nowrap; text-overflow: ellipsis; }.problem-copy em { color: #728197; font: normal 12px monospace; }.problem-copy small { display: block; margin-top: 6px; color: #748399; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.difficulty { padding: 3px 7px; border-radius: 5px; background: #222b3a; color: #aab5c5; font-size: 10px; white-space: nowrap; }.difficulty.简单 { color: var(--green); background: #48d59713; }.difficulty.中等 { color: var(--yellow); background: #f4bf5313; }.difficulty.困难 { color: var(--red); background: #ff718513; }
+.lesson-panel { min-width: 0; background: linear-gradient(180deg, #0d121d, #090d15 50rem); }
+.lesson-hero { padding: 42px clamp(25px, 5vw, 72px) 34px; border-bottom: 1px solid var(--line); background: linear-gradient(135deg, #121b2b, transparent 60%); }
+.lesson-meta { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 11px; }.lesson-meta > span:not(:first-child)::before { content: "·"; margin-right: 9px; color: #3f4c60; }
+.lesson-hero h2 { margin: 14px 0 5px; color: white; font-size: clamp(25px, 3vw, 38px); letter-spacing: -.035em; }.lesson-hero > p { margin: 0; color: var(--muted); font: 12px monospace; }
+.hero-actions { display: flex; gap: 9px; margin-top: 25px; }.hero-actions button, .hero-actions a { padding: 9px 13px; border: 1px solid #35445b; border-radius: 7px; background: #141d2b; font-size: 12px; cursor: pointer; }.hero-actions a:hover { border-color: var(--cyan); color: var(--cyan); }.hero-actions .complete.done { border-color: #48d59766; color: var(--green); background: #48d5970d; }
+.lesson-content { max-width: 850px; padding: 5px clamp(25px, 5vw, 72px) 80px; }
+.lesson-section { padding: 36px 0; border-bottom: 1px solid #1f2939; }.section-title { display: flex; align-items: center; gap: 12px; margin-bottom: 21px; }.section-title > span { color: var(--cyan); font: 700 11px monospace; }.section-title h3 { margin: 0; color: #eef3f8; font-size: 17px; }.lead, .lesson-section p { color: #aeb9c8; font-size: 14px; line-height: 1.8; }
+.example { margin-top: 15px; padding: 15px 17px; border-left: 2px solid var(--violet); background: #111827; border-radius: 0 8px 8px 0; }.example > b { color: var(--violet); font-size: 11px; }.example pre { margin-bottom: 0; color: #d9e3ef; white-space: pre-wrap; font: 12px/1.8 monospace; }.example pre span { color: #6f8098; }
+.insight { position: relative; padding: 18px 20px; border: 1px solid #264158; border-radius: 9px; background: #10202b; }.insight > span { color: var(--cyan); font: 700 9px monospace; letter-spacing: .14em; }.insight p { margin: 6px 0 0; color: #c5d7df; }
+.approach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }.approach-grid > div { padding: 18px; border: 1px solid var(--line); border-radius: 9px; background: #101621; }.approach-grid > .optimized { border-color: #493d6a; background: #171529; }.approach-label { color: var(--violet); font: 700 9px monospace; letter-spacing: .1em; }.muted-label { color: #728096; }.approach-grid h4 { margin: 8px 0 4px; color: #e5ebf3; }.approach-grid p { margin: 0; font-size: 13px; }
+.steps { padding: 0; margin: 0; list-style: none; }.steps li { display: grid; grid-template-columns: 30px 1fr; gap: 13px; align-items: center; padding: 9px 0; }.steps li > span { width: 27px; height: 27px; display: grid; place-items: center; border: 1px solid #354861; border-radius: 50%; color: var(--cyan); font: 11px monospace; }.steps p { margin: 0; }
+
+.trace-card { padding: 19px; border: 1px solid #35445b; border-radius: 10px; background: #101824; }.trace-top { display: flex; justify-content: space-between; gap: 20px; }.trace-top span { color: var(--cyan); font: 10px monospace; }.trace-top h4 { margin: 6px 0 0; }.trace-top button { margin-left: 6px; padding: 7px 9px; border: 1px solid #344159; border-radius: 6px; background: #171f2d; font-size: 11px; cursor: pointer; }.trace-top button:disabled { opacity: .35; cursor: default; }
+.variables { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }.variables div { display: flex; gap: 8px; padding: 7px 10px; border-radius: 6px; background: #090f18; }.variables span { color: #718198; font: 11px monospace; }.variables code { color: var(--yellow); font-size: 11px; }.trace-track { display: flex; gap: 4px; margin-top: 15px; }.trace-track button { flex: 1; height: 3px; padding: 0; border: 0; background: #2b3546; cursor: pointer; }.trace-track button.active { background: var(--cyan); }
+.notice { padding: 15px 17px; border: 1px dashed #3a465a; border-radius: 8px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.complexity { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }.complexity div { padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: #0e1520; }.complexity span { display: block; color: var(--muted); font-size: 11px; }.complexity b { display: block; margin-top: 8px; color: var(--cyan); font: 17px monospace; }.subheading { margin: 25px 0 10px; color: #dce5ef; font-size: 13px; }.pitfalls { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }.pitfalls li { display: flex; align-items: center; gap: 9px; color: #aeb9c8; font-size: 13px; }.pitfalls li span { display: grid; place-items: center; width: 17px; height: 17px; border-radius: 50%; background: #ff71851c; color: var(--red); font-size: 10px; }
+.related { display: flex; flex-wrap: wrap; gap: 8px; }.related button { padding: 9px 11px; border: 1px solid var(--line); border-radius: 7px; background: #111827; color: #c2ccda; cursor: pointer; }.related button span { margin-left: 10px; color: var(--muted); font-size: 10px; }.related button:hover { border-color: var(--cyan); }
+.unlock { margin: 38px 0 0; padding: 25px; border: 1px solid #493d6a; border-radius: 12px; background: radial-gradient(circle at 100% 0, #34285b55, transparent 18rem), #131425; }.unlock > span { color: var(--violet); font: 700 10px monospace; letter-spacing: .14em; }.unlock h3 { margin: 9px 0 7px; color: #f0edff; font-size: 20px; }.unlock p { margin: 0; max-width: 630px; }.checklist { display: grid; gap: 9px; }.checklist label { display: flex; align-items: center; gap: 10px; padding: 11px 13px; border: 1px solid #263146; border-radius: 7px; color: #b4c0cf; font-size: 13px; cursor: pointer; }.checklist input { accent-color: var(--cyan); }.empty { padding: 38px 20px; color: var(--muted); text-align: center; font-size: 13px; line-height: 2; }.empty button { border: 0; background: transparent; color: var(--cyan); cursor: pointer; }.detail-empty { padding-top: 120px; }.detail-empty b { color: #d8e2ee; font-size: 18px; }
+@media (max-width: 1100px) {
+  .app-shell { grid-template-columns: 220px minmax(0, 1fr); }
+  .sidebar { padding-inline: 16px; }.side-tip { inset-inline: 16px; }
+  .workspace { grid-template-columns: 330px minmax(0, 1fr); }
+  .topbar { padding-inline: 28px; }.header-progress span { display: none; }
+  .lesson-content, .lesson-hero { padding-inline: 30px; }
+  .approach-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 820px) {
+  .app-shell { display: block; }
+  .sidebar { position: static; width: 100%; height: auto; padding: 16px 20px; display: grid; grid-template-columns: 1fr auto; align-items: center; border-right: 0; border-bottom: 1px solid var(--line); }
+  .brand { margin: 0; }.brand-mark { width: 36px; height: 36px; }.side-label, .progress-ring, .side-stats, .sidebar nav, .side-tip { display: none; }
+  .sidebar::after { content: "进度 " attr(data-progress); color: var(--muted); font-size: 12px; }
+  .topbar { min-height: 145px; padding: 28px 22px 22px; }.topbar h1 { max-width: 430px; }.header-progress { display: none; }
+  .workspace { grid-template-columns: 1fr; }.catalog { border-right: 0; border-bottom: 1px solid var(--line); }.problem-list { max-height: 360px; }
+  .catalog-head { padding-inline: 18px; }.filter-toggle { display: block; border: 1px solid var(--line); border-radius: 6px; background: #141c29; color: #aeb9c8; padding: 6px 10px; font-size: 11px; }
+  .catalog:not(.show-filters) .filters { display: none; }.search, .filters { margin-inline: 18px; }
+  .lesson-hero, .lesson-content { padding-inline: 22px; }.lesson-hero { padding-top: 32px; }
+}
+@media (max-width: 520px) {
+  .topbar { min-height: 126px; }.eyebrow { font-size: 9px; }.topbar h1 { font-size: 25px; }
+  .problem-list { max-height: 310px; }.problem-row { padding-inline: 14px; }.problem-copy small { max-width: 210px; }
+  .lesson-meta { flex-wrap: wrap; }.lesson-hero h2 { font-size: 27px; }.hero-actions { align-items: stretch; flex-direction: column; }.hero-actions a, .hero-actions button { text-align: center; }
+  .lesson-content { padding-bottom: 50px; }.lesson-section { padding-block: 29px; }.complexity { grid-template-columns: 1fr; }.trace-top { flex-direction: column; }.trace-top > div:last-child { display: flex; }.trace-top button { flex: 1; margin: 0 6px 0 0; }
+  .unlock { padding: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+.constraints { margin: 14px 0 18px; padding: 14px 16px 14px 34px; border: 1px solid #28354a; border-radius: 8px; background: #0e1520; color: #98a8ba; font-size: 12px; line-height: 1.75; }
+.related button:disabled { cursor: default; opacity: .65; }
+
+.playground { overflow: hidden; border: 1px solid #2b3648; border-radius: 11px; background: #080c13; box-shadow: 0 18px 40px #0005; }
+.playground-toolbar { min-height: 54px; padding: 10px 13px 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px; border-bottom: 1px solid #242e3e; background: #121823; }
+.playground-toolbar b { display: block; color: #e3ebf5; font-size: 12px; }.playground-toolbar span { display: block; margin-top: 3px; color: #74839a; font-size: 10px; }
+.playground-toolbar button, .runner-actions button { padding: 8px 11px; border: 1px solid #35445b; border-radius: 7px; background: #171f2d; color: #bdc9d8; font-size: 11px; cursor: pointer; }
+.playground-toolbar button:disabled, .runner-actions button:disabled { cursor: wait; opacity: .55; }
+.editor-label { padding: 14px 16px 8px; display: block; color: var(--cyan); font: 700 10px/1.4 monospace; letter-spacing: .06em; }.editor-label span { color: #718198; font-weight: 400; letter-spacing: 0; }
+.code-editor { width: 100%; min-height: 340px; padding: 17px; display: block; resize: vertical; border: 0; border-block: 1px solid #202a3a; border-radius: 0; outline: 0; background: #070b12; color: #d0dceb; caret-color: var(--cyan); font: 12px/1.7 "SFMono-Regular", Consolas, monospace; tab-size: 4; }
+.code-editor:focus { background: #090e17; box-shadow: inset 3px 0 var(--cyan); }.test-editor { min-height: 190px; color: #bdcbe0; }
+.runner-actions { padding: 13px 16px; display: flex; justify-content: flex-end; gap: 9px; border-bottom: 1px solid #242e3e; background: #101620; }
+.runner-actions button { min-width: 112px; }.runner-actions .submit-code { border-color: #36886b; background: #123328; color: #71e4b2; }.runner-actions button:hover:not(:disabled) { border-color: var(--cyan); color: white; }
+.runner-output { margin: 14px 16px 0; overflow: hidden; border: 1px solid #293548; border-radius: 8px; background: #090e16; }.runner-output > div { padding: 8px 11px; border-bottom: 1px solid #222c3c; color: #8190a5; font: 10px monospace; }.runner-output > div span { width: 6px; height: 6px; margin-right: 7px; display: inline-block; border-radius: 50%; background: #718198; }
+.runner-output.success { border-color: #285c49; }.runner-output.success > div span { background: var(--green); }.runner-output.error { border-color: #63323d; }.runner-output.error > div span { background: var(--red); }
+.runner-output pre { min-height: 70px; max-height: 280px; margin: 0; padding: 13px; overflow: auto; color: #b9c7d9; white-space: pre-wrap; word-break: break-word; font: 11px/1.65 "SFMono-Regular", Consolas, monospace; }
+.lesson-section .runner-note { margin: 10px 16px 15px; color: #718198; font-size: 11px; line-height: 1.6; }
+@media (max-width: 520px) { .playground { margin-inline: -8px; }.playground-toolbar { align-items: flex-start; }.code-editor { min-height: 290px; font-size: 11px; }.test-editor { min-height: 180px; }.runner-actions { display: grid; grid-template-columns: 1fr 1fr; }.runner-actions button { min-width: 0; } }
+
+/* 筛选区：完成状态下拉与随机按钮，沿用上方 .filters 的两列网格 */
+.filters .shuffle { grid-column: span 2; padding: 9px 10px; border: 1px solid var(--line); border-radius: 8px; background: #111827; color: #b9c5d5; font-size: 12px; cursor: pointer; transition: border-color .15s, color .15s; }
+.filters .shuffle:hover:not(:disabled) { border-color: #436784; color: #e5edf7; }
+.filters .shuffle:disabled { cursor: default; opacity: .5; }
+
+/* 讲义底部的上一题 / 下一题导航 */
+.lesson-nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: 12px; margin: 26px 0 8px; }
+.lesson-nav button { display: flex; flex-direction: column; gap: 5px; padding: 13px 16px; border: 1px solid #2b3648; border-radius: 10px; background: #0e1520; color: #dbe6f3; font-size: 13px; text-align: left; cursor: pointer; transition: border-color .15s, background .15s; }
+.lesson-nav button:last-child { text-align: right; }
+.lesson-nav button:hover:not(:disabled) { border-color: var(--cyan); background: #111c2a; }
+.lesson-nav button:disabled { cursor: default; opacity: .4; }
+.lesson-nav button span { overflow: hidden; color: #8698ad; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.lesson-nav-position { display: flex; align-items: center; padding: 0 6px; color: #6f8298; font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+@media (max-width: 720px) {
+  .lesson-nav { grid-template-columns: 1fr; }
+  .lesson-nav button:last-child { text-align: left; }
+  .lesson-nav-position { justify-content: center; }
+}
+
+/* 讲义按需加载时的骨架占位 */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.skeleton-block { margin: 0 0 16px; border-radius: 8px; background: linear-gradient(90deg, #131b28 25%, #1a2536 37%, #131b28 63%); background-size: 400% 100%; animation: skeleton-shimmer 1.4s ease-in-out infinite; }
+@keyframes skeleton-shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+@media (prefers-reduced-motion: reduce) { .skeleton-block { animation: none; } }
+
+/* 练习区工具栏与快捷键提示 */
+.toolbar-actions { display: flex; gap: 8px; }
+.runner-actions .shortcut-hint { align-self: center; margin-left: auto; color: #6f8298; font-size: 11px; }
+
+/* 侧边栏进度导出导入 */
+.progress-io { margin: 4px 20px 0; }
+.progress-io-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.progress-io-actions button { padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: #111827; color: #b9c5d5; font-size: 12px; cursor: pointer; transition: border-color .15s, color .15s; }
+.progress-io-actions button:hover:not(:disabled) { border-color: #436784; color: #e5edf7; }
+.progress-io-actions button:disabled { cursor: default; opacity: .45; }
+.progress-io-note { margin: 9px 0 0; color: #6f8298; font-size: 11px; line-height: 1.6; }
+
+@media (max-width: 720px) {
+  .runner-actions .shortcut-hint { display: none; }
+}
+
+/* 讲义按需加载失败时的提示 */
+.notice.load-error { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; border-color: #6b3a3a; background: #1b1114; color: #e6cfd1; }
+.notice.load-error b { color: #ffb3b8; font-size: 14px; }
+.notice.load-error p { margin: 0; }
+.notice.load-error button { padding: 8px 14px; border: 1px solid #7d4548; border-radius: 8px; background: #2a1619; color: #ffd9dc; font-size: 12px; cursor: pointer; transition: border-color .15s, background .15s; }
+.notice.load-error button:hover { border-color: #b06a6e; background: #351b1f; }
+
+/* ============ SQL 板块 ============ */
+
+/* 侧边栏导航项右侧的进度计数 */
+.nav-item i { margin-left: auto; color: #6f8298; font-size: 10px; font-style: normal; font-variant-numeric: tabular-nums; }
+
+/* 表结构与测试数据预览 */
+.schema-view { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border-top: 1px solid #242e3e; background: #242e3e; }
+.schema-block { padding: 13px 16px; background: #0b1017; }
+.schema-block b { display: block; margin-bottom: 8px; color: #8fa3bb; font-size: 11px; font-weight: 600; }
+.schema-block pre { margin: 0; overflow: auto; max-height: 190px; color: #9db4cc; font: 11px/1.7 "SFMono-Regular", Consolas, monospace; white-space: pre-wrap; }
+
+.sql-editor { min-height: 150px; }
+
+/* 结果表格 */
+.result-table { margin: 12px 13px 4px; }
+.result-table > b { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; color: #8fa3bb; font-size: 11px; font-weight: 600; }
+.result-table > b em { color: #6f8298; font-size: 10px; font-style: normal; }
+.table-scroll { overflow: auto; max-height: 260px; border: 1px solid #263141; border-radius: 8px; }
+.table-scroll table { width: 100%; border-collapse: collapse; font: 11px/1.6 "SFMono-Regular", Consolas, monospace; }
+.table-scroll th { position: sticky; top: 0; padding: 8px 11px; border-bottom: 1px solid #2f3b4d; background: #141b26; color: #b9c9dc; text-align: left; white-space: nowrap; }
+.table-scroll td { padding: 7px 11px; border-bottom: 1px solid #1b2431; color: #a7b8cb; white-space: nowrap; }
+.table-scroll tr:last-child td { border-bottom: 0; }
+.table-scroll td.cell-diff { background: #3a1a1f; color: #ffc2c7; }
+.table-scroll td.no-rows { color: #6f8298; text-align: center; }
+.empty-result { color: #6f8298; font-size: 11px; }
+.empty-result p { margin: 4px 0 0; }
+
+/* 验证失败时的期望/实际并排对比 */
+.result-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+
+/* 题面中的期望结果预览 */
+.expected-preview { margin: 15px 0 4px; }
+.expected-preview b { display: block; margin-bottom: 8px; color: #8fa3bb; font-size: 11px; }
+.expected-preview small { display: block; margin-top: 7px; color: #6f8298; font-size: 11px; }
+
+/* 参考答案折叠区 */
+.solution-reveal { margin-top: 16px; border: 1px solid #2b3648; border-radius: 9px; background: #0e1520; }
+.solution-reveal summary { padding: 11px 15px; color: #9fb3c8; font-size: 12px; cursor: pointer; }
+.solution-reveal summary:hover { color: #e5edf7; }
+.solution-sql { margin: 0; padding: 0 15px 14px; overflow: auto; color: var(--cyan); font: 11px/1.75 "SFMono-Regular", Consolas, monospace; white-space: pre-wrap; }
+
+/* MySQL 方言差异提示 */
+.dialect-note { margin-top: 17px; padding: 14px 16px; border: 1px solid #3d4a2e; border-radius: 9px; background: #151a10; }
+.dialect-note b { color: #cadd9a; font-size: 12px; }
+.dialect-note p { margin: 6px 0 0; color: #aebb90; font-size: 12px; line-height: 1.75; }
+
+@media (max-width: 720px) {
+  .schema-view, .result-compare { grid-template-columns: 1fr; }
+}

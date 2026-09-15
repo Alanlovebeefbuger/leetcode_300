@@ -1,0 +1,30 @@
+{
+  "name": "leetcode-top-500-tutorial",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lesson-index": "node scripts/generate-lesson-index.mjs",
+    "lesson-index:check": "node scripts/generate-lesson-index.mjs --check",
+    "sql:verify": "node scripts/verify-sql-lessons.mjs",
+    "sql:runtime": "node scripts/verify-sql-runtime.mjs",
+    "sql-catalog": "node scripts/generate-sql-catalog.mjs",
+    "sql-catalog:check": "node scripts/generate-sql-catalog.mjs --check"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.4",
+    "@vitejs/plugin-react": "5.0.4",
+    "pyodide": "0.29.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "typescript": "5.9.2",
+    "vite": "7.3.6"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.16",
+    "@types/react-dom": "19.1.9"
+  }
+}
